@@ -1,0 +1,6 @@
+{
+  "require": [
+    "java",
+    "curl"
+  ]
+}
