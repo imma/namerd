@@ -10,7 +10,14 @@ function server {
 
   case "${1:-}" in
     default)
-      exec namerd "/config/namerd/namerd.yaml"
+      local pth_config="/config/namerd/namerd.yaml"
+
+      if [[ -f "$pth_config" ]]; then
+        exec namerd "$pth_config"
+      else
+        echo "ERROR: missing $pth_config" 1>&2
+        sleep 10
+      fi
       ;;
     *)
       echo "ERROR: unknown server command: ${1:-/not-supplied/}" 1>&2
