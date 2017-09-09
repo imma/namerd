@@ -4,16 +4,31 @@ function bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  local fnm_namerd="namerd-${NAMERD_VERSION}-exec"
-  local url_namerd="https://github.com/BuoyantIO/linkerd/releases/download/${NAMERD_VERSION}/$fnm_namerd"
-
-  cache curl "$fnm_namerd" "$url_namerd"
-
   mkdir -p "$shome/vendor"
 
+  local fnm_namerd="namerd-${NAMERD_VERSION}-exec"
+  local url_namerd="https://github.com/linkerd/linkerd/releases/download/${NAMERD_VERSION}/$fnm_namerd"
+
+  cache curl "$fnm_namerd" "$url_namerd"
   rsync -ia "${BASEBOX_CACHE}/curl/$fnm_namerd" "$shome/vendor/"
   chmod 755 "$shome/vendor/$fnm_namerd"
   ln -nfs "../vendor/$fnm_namerd" "$shome/bin/namerd"
+
+  local fnm_namerctl="namerctl-${NAMERCTL_VERSION}-exec"
+  case "$(uname -s)" in
+    Linux)
+      local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_linux_amd64"
+      ;;
+    Darwin)
+      local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_darwin"
+      ;;
+  esac
+
+  cache curl "$fnm_namerctl" "$url_namerctl"
+
+  rsync -ia "${BASEBOX_CACHE}/curl/$fnm_namerctl" "$shome/vendor/"
+  chmod 755 "$shome/vendor/$fnm_namerctl"
+  ln -nfs "../vendor/$fnm_namerctl" "$shome/bin/namerctl"
 }
 
 bootstrap

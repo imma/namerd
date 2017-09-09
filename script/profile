@@ -5,6 +5,7 @@ function _namerd_profile {
   PATH="$shome/bin:$PATH"
 
   NAMERD_VERSION='1.2.0'
+  NAMERCTL_VERSION='0.8.6'
 }
 
 _namerd_profile

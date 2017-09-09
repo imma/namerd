@@ -5,9 +5,12 @@ function version {
   source "$shome/script/profile"
 
   local ver_namerd="$(basename "$(readlink "$shome/bin/namerd")" | cut -d- -f2)"
+  local ver_namerctl="$(basename "$(readlink "$shome/bin/namerctl")" | cut -d- -f2)"
+
   jq -n \
     --arg namerd "$ver_namerd" \
-    '{namerd: $namerd}'
+    --arg namerctl "$ver_namerctl" \
+    '{namerd: $namerd, namerctl: $namerctl}'
 }
 
 version "$@"
