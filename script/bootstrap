@@ -15,13 +15,9 @@ function bootstrap {
   ln -nfs "../vendor/$fnm_namerd" "$shome/bin/namerd"
 
   local fnm_namerctl="namerctl-${NAMERCTL_VERSION}-exec"
-  case "$(uname -s)" in
-    Linux)
-      local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_linux_amd64"
-      ;;
-    Darwin)
-      local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_darwin"
-      ;;
+  case "${DISTRIB_ID}" in
+    Darwin)        local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_darwin" ;;
+    Ubuntu|Amazon) local url_namerctl="https://github.com/linkerd/namerctl/releases/download/${NAMERCTL_VERSION}/namerctl_linux_amd64" ;;
   esac
 
   cache curl "$fnm_namerctl" "$url_namerctl"
