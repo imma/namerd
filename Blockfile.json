@@ -2,5 +2,6 @@
   "require": [
     "java",
     "curl"
-  ]
+  ],
+  "versions": {}
 }
